@@ -38,6 +38,7 @@ If you use this code for your research, please cite our paper.
   title     = {Line Drawings for Face Portraits from Photos using Global and Local Structure based {GAN}s},
   author    = {Yi, Ran and Xia, Mengfei and Liu, Yong-Jin and Lai, Yu-Kun and Rosin, Paul L},
   booktitle = {{IEEE} Transactions on Pattern Analysis and Machine Intelligence (TPAMI)},
+  doi       = {10.1109/TPAMI.2020.2987931},
   year      = {2020}
 }
 ```
@@ -55,9 +56,9 @@ pip install -r requirements.txt
 ```
 
 ### 2.Quick Start (Apply a Pre-trained Model)
-- Download APDrawing dataset from [BaiduYun] or [YandexDrive], and extract to `dataset`.
+- Download APDrawing dataset from [BaiduYun](https://pan.baidu.com/s/1cN5gEYJ2tnE9WboLA79Z5g)(extract code:0zuv) or [YandexDrive](https://yadi.sk/d/4vWhi8-ZQj_nRw), and extract to `dataset`.
 
-- Download pre-trained models and auxiliary nets from [BaiduYun] or [YandexDrive], and extract to `checkpoints`.
+- Download pre-trained models and auxiliary nets from [BaiduYun](https://pan.baidu.com/s/1nrtCHQmgcwbSGxWuAVzWhA)(extract code:imqp) or [YandexDrive](https://yadi.sk/d/DS4271lbEPhGVQ), and extract to `checkpoints`.
 
 - Generate artistic portrait drawings for example photos in `dataset/test_single` using
 ``` bash
