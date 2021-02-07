@@ -157,8 +157,8 @@ class AlignedDataset(BaseDataset):
                         soft_border_mask4.append(torch.Tensor(soft_border_mask).unsqueeze(0))
                         item['soft_'+regions[i]+'_mask'] = soft_border_mask4[i]
                 for i in range(4):
-                    item[regions[i]+'_A'] = A[:,center[i,1]-rhs[i]/2:center[i,1]+rhs[i]/2,center[i,0]-rws[i]/2:center[i,0]+rws[i]/2]
-                    item[regions[i]+'_B'] = B[:,center[i,1]-rhs[i]/2:center[i,1]+rhs[i]/2,center[i,0]-rws[i]/2:center[i,0]+rws[i]/2]
+                    item[regions[i]+'_A'] = A[:,int(center[i,1]-rhs[i]/2):int(center[i,1]+rhs[i]/2),int(center[i,0]-rws[i]/2):int(center[i,0]+rws[i]/2)]
+                    item[regions[i]+'_B'] = B[:,int(center[i,1]-rhs[i]/2):int(center[i,1]+rhs[i]/2),int(center[i,0]-rws[i]/2):int(center[i,0]+rws[i]/2)]
                     if self.opt.soft_border:
                         item[regions[i]+'_A'] = item[regions[i]+'_A'] * soft_border_mask4[i].repeat(int(input_nc/output_nc),1,1)
                         item[regions[i]+'_B'] = item[regions[i]+'_B'] * soft_border_mask4[i]
@@ -181,7 +181,7 @@ class AlignedDataset(BaseDataset):
                     cmasks0.append(cmask0)
                     cmask = cmask0.clone()
                     if self.opt.region_enm in [0,1]:
-                        cmask = cmask[:,center[i,1]-rhs[i]/2:center[i,1]+rhs[i]/2,center[i,0]-rws[i]/2:center[i,0]+rws[i]/2]
+                        cmask = cmask[:,int(center[i,1]-rhs[i]/2):int(center[i,1]+rhs[i]/2),int(center[i,0]-rws[i]/2):int(center[i,0]+rws[i]/2)]
                     elif self.opt.region_enm in [2]: # need to multiply cmask
                         item[regions[i]+'_A'] = (A/2+0.5) * cmask * 2 - 1
                         item[regions[i]+'_B'] = (B/2+0.5) * cmask * 2 - 1
@@ -194,7 +194,7 @@ class AlignedDataset(BaseDataset):
                 mask = torch.ones(B.shape)
                 if self.opt.region_enm == 0:
                     for i in range(4):
-                        mask[:,center[i,1]-rhs[i]/2:center[i,1]+rhs[i]/2,center[i,0]-rws[i]/2:center[i,0]+rws[i]/2] = 0
+                        mask[:,int(center[i,1]-rhs[i]/2):int(center[i,1]+rhs[i]/2),int(center[i,0]-rws[i]/2):int(center[i,0]+rws[i]/2)] = 0
                     if self.opt.soft_border:
                         imgsize = self.opt.fineSize
                         maskn = mask[0].numpy()
@@ -209,8 +209,8 @@ class AlignedDataset(BaseDataset):
                         xb = []
                         yb = []
                         for i in range(4):
-                            xbi = [center[i,0]-rws[i]/2, center[i,0]+rws[i]/2-1]
-                            ybi = [center[i,1]-rhs[i]/2, center[i,1]+rhs[i]/2-1]
+                            xbi = [center[i,0]-rws[i]//2, center[i,0]+rws[i]//2-1]
+                            ybi = [center[i,1]-rhs[i]//2, center[i,1]+rhs[i]//2-1]
                             for j in range(2):
                                 maskx = bound[:,xbi[j]]
                                 masky = bound[ybi[j],:]
@@ -228,7 +228,7 @@ class AlignedDataset(BaseDataset):
                     for i in range(4):
                         cmask0 = cmasks0[i]
                         rec = torch.zeros(B.shape)
-                        rec[:,center[i,1]-rhs[i]/2:center[i,1]+rhs[i]/2,center[i,0]-rws[i]/2:center[i,0]+rws[i]/2] = 1
+                        rec[:,center[i,1]-rhs[i]//2:center[i,1]+rhs[i]//2,center[i,0]-rws[i]//2:center[i,0]+rws[i]//2] = 1
                         mask = mask * (torch.ones(B.shape) - cmask0 * rec)
                 elif self.opt.region_enm == 2:
                     for i in range(4):
