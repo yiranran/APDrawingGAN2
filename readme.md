@@ -7,6 +7,7 @@ It is a journal extension of our previous CVPR 2019 work [APDrawingGAN](https://
 This project generates artistic portrait drawings from face photos using a GAN-based model.
 You may find useful information in [preprocessing steps](preprocess/readme.md) and [training/testing tips](docs/tips.md).
 
+[[Jittor implementation]](https://github.com/yiranran/APDrawingGAN2-Jittor)
 
 ## Our Proposed Framework
  
