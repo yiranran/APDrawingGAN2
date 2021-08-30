@@ -95,7 +95,7 @@ class SingleDataset(BaseDataset):
                     soft_border_mask4.append(torch.Tensor(soft_border_mask).unsqueeze(0))
                     item['soft_'+regions[i]+'_mask'] = soft_border_mask4[i]
             for i in range(4):
-                item[regions[i]+'_A'] = A[:,center[i,1]-rhs[i]/2:center[i,1]+rhs[i]/2,center[i,0]-rws[i]/2:center[i,0]+rws[i]/2]
+                item[regions[i]+'_A'] = A[:,int(center[i,1]-rhs[i]/2):int(center[i,1]+rhs[i]/2),int(center[i,0]-rws[i]/2):int(center[i,0]+rws[i]/2)]
                 if self.opt.soft_border:
                     item[regions[i]+'_A'] = item[regions[i]+'_A'] * soft_border_mask4[i].repeat(int(input_nc/output_nc),1,1)
             if self.opt.compactmask:
@@ -111,7 +111,7 @@ class SingleDataset(BaseDataset):
                     cmask0 = (cmask0 >= 0.5).float()
                     cmasks0.append(cmask0)
                     cmask = cmask0.clone()
-                    cmask = cmask[:,center[i,1]-rhs[i]/2:center[i,1]+rhs[i]/2,center[i,0]-rws[i]/2:center[i,0]+rws[i]/2]
+                    cmask = cmask[:,int(center[i,1]-rhs[i]/2):int(center[i,1]+rhs[i]/2),int(center[i,0]-rws[i]/2):int(center[i,0]+rws[i]/2)]
                     cmasks.append(cmask)
                 item['cmaskel'] = cmasks[0]
                 item['cmasker'] = cmasks[1]
@@ -121,7 +121,7 @@ class SingleDataset(BaseDataset):
                 output_nc = self.opt.output_nc
                 mask = torch.ones([output_nc,A.shape[1],A.shape[2]])
                 for i in range(4):
-                    mask[:,center[i,1]-rhs[i]/2:center[i,1]+rhs[i]/2,center[i,0]-rws[i]/2:center[i,0]+rws[i]/2] = 0
+                    mask[:,int(center[i,1]-rhs[i]/2):int(center[i,1]+rhs[i]/2),int(center[i,0]-rws[i]/2):int(center[i,0]+rws[i]/2)] = 0
                 if self.opt.soft_border:
                     imgsize = self.opt.fineSize
                     maskn = mask[0].numpy()
@@ -136,8 +136,8 @@ class SingleDataset(BaseDataset):
                     xb = []
                     yb = []
                     for i in range(4):
-                        xbi = [center[i,0]-rws[i]/2, center[i,0]+rws[i]/2-1]
-                        ybi = [center[i,1]-rhs[i]/2, center[i,1]+rhs[i]/2-1]
+                        xbi = [center[i,0]-rws[i]//2, center[i,0]+rws[i]//2-1]
+                        ybi = [center[i,1]-rhs[i]//2, center[i,1]+rhs[i]//2-1]
                         for j in range(2):
                             maskx = bound[:,xbi[j]]
                             masky = bound[ybi[j],:]
