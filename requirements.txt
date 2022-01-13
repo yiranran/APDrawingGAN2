@@ -4,7 +4,7 @@ dominate==2.4.0
 visdom==0.1.8.9
 scipy==1.1.0
 numpy==1.16.4
-Pillow==4.3.0
+Pillow==9.0.0
 opencv-python==4.1.0.25
 dlib==19.18.0
 shapely==1.7.0
